@@ -1,14 +1,14 @@
-import { printPassword } from "./utils/messages";
+import { readCredentials } from "./utils/credentials";
+
 import {
   askForMainPassword,
   askForCommand,
+  askForCredential,
   chooseService,
-  addNewService,
-  addNewUserAndPw,
 } from "./utils/question";
 import {
   isMainPasswordValid,
-  doesCredentialServiceExist,
+  // doesCredentialServiceExist,
 } from "./utils/validation";
 
 //function start() {
@@ -36,23 +36,32 @@ const start = async () => {
   switch (command) {
     case "list":
       {
-        const service = await chooseService();
-        printPassword(service);
+        const credentials = await readCredentials();
+        const credentialServices = credentials.map(
+          (credential) => credential.service
+        );
+        const service = await chooseService(credentialServices);
+        const selectedService = credentials.find(
+          (credential) => credential.service === service
+        );
+        console.log(selectedService);
       }
       break; // there is only one valid case, therefore a break stops the process; if more cases may be valid no break is needed
     case "add":
       {
-        const startAddCase = async () => {
-          const newService = await addNewService();
-          if (!doesCredentialServiceExist(newService)) {
-            await addNewUserAndPw();
-            console.log("Your new service has been saved");
-          } else {
-            console.log("Service already exists");
-            startAddCase();
-          }
-        };
-        startAddCase();
+        const newCredential = await askForCredential();
+        console.log(newCredential);
+        // const startAddCase = async () => {
+        //   const newService = await addNewService();
+        //   if (!doesCredentialServiceExist(newService)) {
+        //     await addNewUserAndPw();
+        //     console.log("Your new service has been saved");
+        //   } else {
+        //     console.log("Service already exists");
+        //     startAddCase();
+        //   }
+        // };
+        // startAddCase();
       }
       break;
   }

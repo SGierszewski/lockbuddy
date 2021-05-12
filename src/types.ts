@@ -2,5 +2,11 @@ export type Command = "list" | "add";
 
 export type NewUserAndPw = {
   name: string;
-  message: string;
+  password: string;
+};
+
+export type Credential = {
+  service: string;
+  name: string;
+  password: string;
 };
