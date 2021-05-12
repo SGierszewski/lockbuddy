@@ -38,7 +38,7 @@ export const chooseService = async (): Promise<string> => {
       message: "Choose a service",
       choices: [
         { name: "Google", value: "Google", short: "pw1" },
-        { name: "Github", value: "Github", short: "pw2" },
+        { name: "GitHub", value: "GitHub", short: "pw2" },
         { name: "Codewars", value: "Codewars", short: "pw3" },
       ],
     },
