@@ -23,13 +23,14 @@ const start = async () => {
 
   /* Solution with recursion */
   const mainPassword = await askForMainPassword();
-  if (!isMainPasswordValid(mainPassword)) {
+  if (!(await isMainPasswordValid(mainPassword))) {
     console.log("Is invalid");
     start();
-    // mainPassword = await askForMainPassword();
-  } else {
-    console.log("Is valid");
+    return;
   }
+
+  console.log("Is valid");
+
   const command = await askForCommand();
 
   switch (command) {
