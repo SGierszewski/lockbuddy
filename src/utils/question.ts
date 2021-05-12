@@ -1,14 +1,15 @@
 import inquirer from "inquirer";
-import { Command } from "../types";
+import { Command, NewUserAndPw } from "../types";
 
 //export function askForMainPassword(): Promise<string> {
 export const askForMainPassword = (): Promise<string> => {
   return inquirer
     .prompt<{ mainPassword: string }>([
       {
-        type: "passowrd",
+        type: "password",
         name: "mainPassword",
         message: "Enter main password",
+        mask: "*",
       },
     ])
     .then((answers) => answers.mainPassword);
@@ -29,7 +30,24 @@ export const askForCommand = async (): Promise<Command> => {
   return answers.command;
 };
 
-export const addNewCredential = async (): Promise<string> => {
+export const chooseService = async (): Promise<string> => {
+  const answers = await inquirer.prompt<{ service: string }>([
+    {
+      type: "list",
+      name: "Service",
+      message: "Choose a service",
+      choices: [
+        { name: "Google", value: "Google", short: "pw1" },
+        { name: "Github", value: "Github", short: "pw2" },
+        { name: "Codewars", value: "Codewars", short: "pw3" },
+      ],
+    },
+  ]);
+  return answers.service;
+};
+
+// possibel to add all question into one addNewCredential and
+export const addNewService = async (): Promise<string> => {
   const inputService = await inquirer.prompt<{ service: string }>([
     {
       type: "input",
@@ -37,19 +55,22 @@ export const addNewCredential = async (): Promise<string> => {
       message: "What's the service?",
     },
   ]);
-  const inputUsername = await inquirer.prompt<{ username: string }>([
+  return inputService.service;
+};
+
+export const addNewUserAndPw = async (): Promise<NewUserAndPw> => {
+  const answers = await inquirer.prompt<NewUserAndPw>([
     {
       type: "input",
       name: "username",
-      message: "What your username?",
+      message: "What's your username?",
     },
-  ]);
-  const inputPassword = await inquirer.prompt<{ password: string }>([
     {
-      type: "input",
+      type: "password",
       name: "password",
       message: "What's your password?",
+      mask: "*",
     },
   ]);
-  return inputService.service, inputUsername.username, inputPassword.password;
+  return answers;
 };
