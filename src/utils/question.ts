@@ -17,6 +17,7 @@ export const askForMainPassword = (): Promise<string> => {
 
 export const askForCommand = async (): Promise<Command> => {
   const answers = await inquirer.prompt<{ command: Command }>([
+    //Command is declared in types.ts
     {
       type: "list",
       name: "command",
@@ -30,6 +31,7 @@ export const askForCommand = async (): Promise<Command> => {
   return answers.command;
 };
 
+// if user chooses the list case
 export const chooseService = async (services: string[]): Promise<string> => {
   const answers = await inquirer.prompt<{ service: string }>({
     type: "list",
@@ -41,6 +43,7 @@ export const chooseService = async (services: string[]): Promise<string> => {
   return answers.service;
 };
 
+// if user chooses the add case
 export const askForCredential = async (): Promise<Credential> => {
   const answers = await inquirer.prompt<Credential>([
     {
@@ -53,7 +56,11 @@ export const askForCredential = async (): Promise<Credential> => {
       name: "username",
       message: "Please enter username",
     },
-    { type: "password", name: "password", message: "Please enter password" },
+    {
+      type: "password",
+      name: "password",
+      message: "Please enter password",
+    },
   ]);
   return answers;
 };

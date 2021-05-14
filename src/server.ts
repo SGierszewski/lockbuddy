@@ -7,9 +7,10 @@ import {
   chooseService,
 } from "./utils/question";
 import {
+  doesCredentialServiceExist,
   isMainPasswordValid,
-  // doesCredentialServiceExist,
 } from "./utils/validation";
+import { Credential } from "./types";
 
 //function start() {
 const start = async () => {
@@ -28,7 +29,6 @@ const start = async () => {
     start();
     return;
   }
-
   console.log("Is valid");
 
   const command = await askForCommand();
@@ -50,11 +50,9 @@ const start = async () => {
     case "add":
       {
         const newCredential = await askForCredential();
-        console.log(newCredential);
         // const startAddCase = async () => {
-        //   const newService = await addNewService();
-        //   if (!doesCredentialServiceExist(newService)) {
-        //     await addNewUserAndPw();
+        //   if (!doesCredentialServiceExist(newCredential)) {
+        //     await askForCredential();
         //     console.log("Your new service has been saved");
         //   } else {
         //     console.log("Service already exists");
@@ -62,6 +60,8 @@ const start = async () => {
         //   }
         // };
         // startAddCase();
+
+        console.log(newCredential);
       }
       break;
   }
