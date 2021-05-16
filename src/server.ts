@@ -1,15 +1,11 @@
-import { printPassword } from "./utils/messages";
+import { readCredentials, saveCredentials } from "./utils/credentials";
 import {
   askForMainPassword,
   askForCommand,
   chooseService,
-  addNewService,
-  addNewUserAndPw,
 } from "./utils/question";
-import {
-  isMainPasswordValid,
-  doesCredentialServiceExist,
-} from "./utils/validation";
+import { isMainPasswordValid } from "./utils/validation";
+import CryptoJS from "crypto-js";
 
 //function start() {
 const start = async () => {
@@ -28,7 +24,6 @@ const start = async () => {
     start();
     return;
   }
-
   console.log("Is valid");
 
   const command = await askForCommand();
@@ -36,23 +31,50 @@ const start = async () => {
   switch (command) {
     case "list":
       {
-        const service = await chooseService();
-        printPassword(service);
+        const credentials = await readCredentials();
+        const credentialServices = credentials.map(
+          //create a new array which only includes services
+          (credential) => credential.service
+        );
+        const service = await chooseService(credentialServices);
+        const selectedService = credentials.find(
+          (credential) => credential.service === service
+        );
+
+        if (selectedService) {
+          const cryptPassword = CryptoJS.AES.decrypt(
+            selectedService.password,
+            "test"
+          );
+          console.log(
+            `${selectedService.service}:
+          Username: ${selectedService.username}
+          Password: ${cryptPassword.toString(CryptoJS.enc.Utf8)}`
+          );
+        }
       }
       break; // there is only one valid case, therefore a break stops the process; if more cases may be valid no break is needed
     case "add":
       {
-        const startAddCase = async () => {
-          const newService = await addNewService();
-          if (!doesCredentialServiceExist(newService)) {
-            await addNewUserAndPw();
-            console.log("Your new service has been saved");
-          } else {
-            console.log("Service already exists");
-            startAddCase();
-          }
-        };
-        startAddCase();
+        saveCredentials();
+
+        // const credentials = await readCredentials();
+        // console.log(credentials);
+        // const newCredential = await askForCredential();
+
+        // Validation of credential service
+        // const startAddCase = async () => {
+        //   if (!doesCredentialServiceExist(newCredential)) {
+        //     await askForCredential();
+        //     console.log("Your new service has been saved");
+        //   } else {
+        //     console.log("Service already exists");
+        //     startAddCase();
+        //   }
+        // };
+        // startAddCase();
+
+        // console.log(newCredential);
       }
       break;
   }

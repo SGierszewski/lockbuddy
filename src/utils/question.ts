@@ -1,5 +1,5 @@
 import inquirer from "inquirer";
-import { Command, NewUserAndPw } from "../types";
+import { Command, Credential } from "../types";
 
 //export function askForMainPassword(): Promise<string> {
 export const askForMainPassword = (): Promise<string> => {
@@ -17,6 +17,7 @@ export const askForMainPassword = (): Promise<string> => {
 
 export const askForCommand = async (): Promise<Command> => {
   const answers = await inquirer.prompt<{ command: Command }>([
+    //Command is declared in types.ts
     {
       type: "list",
       name: "command",
@@ -30,47 +31,81 @@ export const askForCommand = async (): Promise<Command> => {
   return answers.command;
 };
 
-export const chooseService = async (): Promise<string> => {
-  const answers = await inquirer.prompt<{ service: string }>([
-    {
-      type: "list",
-      name: "Service",
-      message: "Choose a service",
-      choices: [
-        { name: "Google", value: "Google", short: "pw1" },
-        { name: "GitHub", value: "GitHub", short: "pw2" },
-        { name: "Codewars", value: "Codewars", short: "pw3" },
-      ],
-    },
-  ]);
+// if user chooses the list case
+export const chooseService = async (services: string[]): Promise<string> => {
+  const answers = await inquirer.prompt<{ service: string }>({
+    type: "list",
+    name: "service",
+    message: "Please choose a service",
+    choices: services,
+  });
+
   return answers.service;
 };
 
-// possibel to add all question into one addNewCredential and
-export const addNewService = async (): Promise<string> => {
-  const inputService = await inquirer.prompt<{ service: string }>([
+// if user chooses the add case
+export const askForCredential = async (): Promise<Credential> => {
+  const answers = await inquirer.prompt<Credential>([
     {
       type: "input",
       name: "service",
-      message: "What's the service?",
+      message: "Please enter service name",
     },
-  ]);
-  return inputService.service;
-};
-
-export const addNewUserAndPw = async (): Promise<NewUserAndPw> => {
-  const answers = await inquirer.prompt<NewUserAndPw>([
     {
       type: "input",
       name: "username",
-      message: "What's your username?",
+      message: "Please enter username",
     },
     {
       type: "password",
       name: "password",
-      message: "What's your password?",
-      mask: "*",
+      message: "Please enter password",
     },
   ]);
   return answers;
 };
+
+// export const chooseService = async (): Promise<string> => {
+//   const answers = await inquirer.prompt<{ service: string }>([
+//     {
+//       type: "list",
+//       name: "Service",
+//       message: "Choose a service",
+//       choices: [
+//         { name: "Google", value: "Google", short: "pw1" },
+//         { name: "GitHub", value: "GitHub", short: "pw2" },
+//         { name: "Codewars", value: "Codewars", short: "pw3" },
+//       ],
+//     },
+//   ]);
+//   return answers.service;
+// };
+
+// // possibel to add all question into one addNewCredential and
+// export const addNewService = async (): Promise<string> => {
+//   const inputService = await inquirer.prompt<{ service: string }>([
+//     {
+//       type: "input",
+//       name: "service",
+//       message: "What's the service?",
+//     },
+//   ]);
+//   return inputService.service;
+// };
+
+// export const addNewUserAndPw = async (): Promise<NewUserAndPw> => {
+//   const answers = await inquirer.prompt<NewUserAndPw>([
+//     {
+//       type: "input",
+//       name: "username",
+//       message: "What's your username?",
+//     },
+//     {
+//       type: "password",
+//       name: "password",
+//       message: "What's your password?",
+//       mask: "*",
+//     },
+//   ]);
+//   return answers;
+// };

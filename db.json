@@ -1,0 +1,14 @@
+{
+  "credentials": [
+    {
+      "service": "Netflix",
+      "username": "Steffi1",
+      "password": "U2FsdGVkX1+5NRp72kWv/h6CzumR+PiNvyGbUmweRUs="
+    },
+    {
+      "service": "GitHub",
+      "username": "ST",
+      "password": "U2FsdGVkX1+NPPJmKMLK0cGZDGNKNanbwqGXpy+Qek8="
+    }
+  ]
+}
