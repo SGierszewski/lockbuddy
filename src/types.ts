@@ -8,6 +8,6 @@ export type NewUserAndPw = {
 // define the type credential
 export type Credential = {
   service: string;
-  name: string;
+  username: string;
   password: string;
 };

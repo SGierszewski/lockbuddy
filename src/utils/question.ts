@@ -1,5 +1,5 @@
 import inquirer from "inquirer";
-import { Command } from "../types";
+import { Command, Credential } from "../types";
 
 //export function askForMainPassword(): Promise<string> {
 export const askForMainPassword = (): Promise<string> => {

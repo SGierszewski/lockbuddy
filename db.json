@@ -1,7 +1,14 @@
 {
   "credentials": [
-    { "service": "GitHub", "username": "Steffi", "password": "123" },
-    { "service": "Google", "username": "Steffi2", "password": "abc" },
-    { "service": "Codewars", "username": "ST", "password": "321" }
+    {
+      "service": "Netflix",
+      "username": "Steffi1",
+      "password": "U2FsdGVkX1+5NRp72kWv/h6CzumR+PiNvyGbUmweRUs="
+    },
+    {
+      "service": "GitHub",
+      "username": "ST",
+      "password": "U2FsdGVkX1+NPPJmKMLK0cGZDGNKNanbwqGXpy+Qek8="
+    }
   ]
 }
