@@ -7,7 +7,7 @@ import {
 } from "./utils/question";
 import { isMainPasswordValid } from "./utils/validation";
 import CryptoJS from "crypto-js";
-import { connectDatabase } from "./database";
+import { connectDatabase, disconnectDatabase } from "./database";
 
 dotenv.config();
 
@@ -67,7 +67,7 @@ const start = async () => {
       break; // there is only one valid case, therefore a break stops the process; if more cases may be valid no break is needed
     case "add":
       {
-        saveCredentials();
+        await saveCredentials(mainPassword);
 
         // const credentials = await readCredentials();
         // console.log(credentials);
@@ -89,6 +89,7 @@ const start = async () => {
       }
       break;
   }
+  await disconnectDatabase();
 };
 
 start();
