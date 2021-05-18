@@ -1,22 +1,19 @@
-import fs from "fs/promises";
+//import fs from "fs/promises";
 import type { Credential } from "../types";
 import { askForCredential } from "../utils/question";
 import CryptoJS from "crypto-js";
-import { getCollection } from "../database";
+import { getCollection, getCredentialsCollection } from "../database";
+//import { Collection } from "mongodb";
 // import { doesCredentialServiceExist } from "./validation";
 
-type DB = {
-  credentials: Credential[];
-};
+// type DB = {
+//   credentials: Credential[];
+// };
 
-export const readCredentials = async (): Promise<Credential[]> => {
-  const response = await fs.readFile("./db.json", "utf-8");
-  const data: DB = JSON.parse(response);
-  return data.credentials;
-};
-
-// export const readCredentials = async (client, collection): Promise<collection> {
-//   const response = await client.db("lockbuddy").collection("credentials").find()
+// export const readCredentials = async (): Promise<Credential[]> => {
+//   const response = await fs.readFile("./db.json", "utf-8");
+//   const data: DB = JSON.parse(response);
+//   return data.credentials;
 // };
 
 // export const saveCredentials = async (
@@ -48,4 +45,19 @@ export const saveCredentials = async (password: string): Promise<void> => {
   ).toString();
   newCredential.password = passwordEncrypt;
   await getCollection("credentials").insertOne(newCredential);
+};
+
+export const readCredentials = async (): Promise<Credential[]> => {
+  //possible to search for specific credentials inside find query; important to set toArray()!!
+  return await getCredentialsCollection()
+    .find()
+    .sort({ service: 1 }) //sort service by name; 1 = upwards, -1 = downwards
+    .toArray();
+};
+
+export const deleteCredential = async (
+  credential: Credential
+): Promise<void> => {
+  await getCollection("credentials").deleteOne(credential);
+  console.log("Credential successfully deleted.");
 };

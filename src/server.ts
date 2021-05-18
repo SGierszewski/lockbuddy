@@ -1,5 +1,9 @@
 import dotenv from "dotenv";
-import { readCredentials, saveCredentials } from "./utils/credentials";
+import {
+  deleteCredential,
+  readCredentials,
+  saveCredentials,
+} from "./utils/credentials";
 import {
   askForMainPassword,
   askForCommand,
@@ -55,7 +59,7 @@ const start = async () => {
         if (selectedService) {
           const cryptPassword = CryptoJS.AES.decrypt(
             selectedService.password,
-            "test"
+            mainPassword
           );
           console.log(
             `${selectedService.service}:
@@ -86,6 +90,23 @@ const start = async () => {
         // startAddCase();
 
         // console.log(newCredential);
+      }
+      break;
+
+    case "delete":
+      {
+        const credentials = await readCredentials();
+        const credentialServices = credentials.map(
+          //create a new array which only includes services
+          (credential) => credential.service
+        );
+        const service = await chooseService(credentialServices);
+        const selectedService = credentials.find(
+          (credential) => credential.service === service
+        );
+        if (selectedService) {
+          await deleteCredential(selectedService);
+        }
       }
       break;
   }

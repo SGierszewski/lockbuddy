@@ -1,4 +1,5 @@
 import { Collection, MongoClient } from "mongodb";
+import { Credential } from "./types";
 
 let client: MongoClient;
 
@@ -8,13 +9,14 @@ export const connectDatabase = async (url: string): Promise<void> => {
     useUnifiedTopology: true,
   });
   await client.connect();
-  // verifys that we have access to all databases and get a list
-  //   const databasesList = await client.db().admin().listDatabases();
-  //   console.log(databasesList);
 };
 
-export const getCollection = (name: string): Collection => {
-  return client.db().collection(name);
+export const getCollection = <T>(name: string): Collection<T> => {
+  return client.db().collection<T>(name);
+};
+
+export const getCredentialsCollection = (): Collection<Credential> => {
+  return getCollection<Credential>("credentials");
 };
 
 export const disconnectDatabase = async (): Promise<void> => {
