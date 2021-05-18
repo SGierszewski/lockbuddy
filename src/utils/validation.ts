@@ -1,5 +1,6 @@
 import fs from "fs/promises";
 import sha256 from "crypto-js/sha256";
+//import type { Credential } from "../types";
 
 export const isMainPasswordValid = async (
   plaintextPassword: string
@@ -9,6 +10,6 @@ export const isMainPasswordValid = async (
   return plaintextPasswordHash === passwordHash;
 };
 
-export const doesCredentialServiceExist = (service: string): boolean => {
-  return service === "GitHub";
-};
+// export const doesCredentialServiceExist = (): boolean => {
+//   return credential.service === "GitHub";
+// };
