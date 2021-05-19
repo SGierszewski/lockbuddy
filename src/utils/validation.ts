@@ -8,7 +8,3 @@ export const isMainPasswordValid = async (
   const plaintextPasswordHash = sha256(plaintextPassword).toString();
   return plaintextPasswordHash === passwordHash;
 };
-
-export const doesCredentialServiceExist = (service: string): boolean => {
-  return service === "GitHub";
-};

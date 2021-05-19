@@ -9,6 +9,21 @@
       "service": "GitHub",
       "username": "ST",
       "password": "U2FsdGVkX1+NPPJmKMLK0cGZDGNKNanbwqGXpy+Qek8="
+    },
+    {
+      "service": "Ebay",
+      "username": "Stefanie",
+      "password": "U2FsdGVkX19ocwiCZmh3au46+vbZHRACFltN3GGd1AY="
+    },
+    {
+      "service": "Github",
+      "username": "hdhd",
+      "password": "U2FsdGVkX1+cUED6Fsi6icH2hnlCAz2HkMdFKdWkiL0="
+    },
+    {
+      "service": "Foodora",
+      "username": "Yummy",
+      "password": "U2FsdGVkX1+2Xf9Ca42Yk9Sr6ETv7cFWgBehkvKouXU="
     }
   ]
 }

@@ -1,10 +1,6 @@
-// the chosen command can only be list or add
-export type Command = "list" | "add";
+// define the type Command: the chosen command can only be list, add or delete
+export type Command = "list" | "add" | "delete";
 
-export type NewUserAndPw = {
-  name: string;
-  password: string;
-};
 // define the type credential
 export type Credential = {
   service: string;
