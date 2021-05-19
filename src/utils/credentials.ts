@@ -13,12 +13,10 @@ export const saveCredentials = async (password: string): Promise<void> => {
   await getCollection("credentials").insertOne(newCredential);
 };
 
+//possible to search for specific credentials inside find query; important to set toArray()!!
+//sort service by name; 1 = upwards, -1 = downwards
 export const readCredentials = async (): Promise<Credential[]> => {
-  //possible to search for specific credentials inside find query; important to set toArray()!!
-  return await getCredentialsCollection()
-    .find()
-    .sort({ service: 1 }) //sort service by name; 1 = upwards, -1 = downwards
-    .toArray();
+  return await getCredentialsCollection().find().sort({ service: 1 }).toArray();
 };
 
 export const deleteCredential = async (
