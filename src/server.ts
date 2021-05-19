@@ -11,6 +11,8 @@ if (process.env.MONGO_URL === undefined) {
 const app = express();
 const port = 5000;
 
+app.use(express.json());
+
 app.get("/api/credentials", async (_request, response) => {
   const credentials = await readCredentials();
   response.json(credentials);
