@@ -1,14 +1,10 @@
 import dotenv from "dotenv";
 import {
   deleteCredential,
-  readCredentials,
   saveCredentials,
+  selectCredential,
 } from "./utils/credentials";
-import {
-  askForMainPassword,
-  askForCommand,
-  chooseService,
-} from "./utils/question";
+import { askForMainPassword, askForCommand } from "./utils/question";
 import { isMainPasswordValid } from "./utils/validation";
 import CryptoJS from "crypto-js";
 import { connectDatabase, disconnectDatabase } from "./database";
@@ -23,16 +19,6 @@ const start = async () => {
   }
 
   await connectDatabase(process.env.MONGO_URL);
-
-  /* Solution with while */
-  // let mainPassword = await askForMainPassword();
-  // while (!isMainPasswordValid(mainPassword)) {
-  //   console.log("is valid");
-  //   mainPassword = await askForMainPassword();
-  // }
-  // console.log("Is valid");
-
-  /* Solution with recursion */
   const mainPassword = await askForMainPassword();
   if (!(await isMainPasswordValid(mainPassword))) {
     console.log("Is invalid");
@@ -46,24 +32,16 @@ const start = async () => {
   switch (command) {
     case "list":
       {
-        const credentials = await readCredentials();
-        const credentialServices = credentials.map(
-          //create a new array which only includes services
-          (credential) => credential.service
-        );
-        const service = await chooseService(credentialServices);
-        const selectedService = credentials.find(
-          (credential) => credential.service === service
-        );
+        const selectedCredential = await selectCredential();
 
-        if (selectedService) {
+        if (selectedCredential) {
           const cryptPassword = CryptoJS.AES.decrypt(
-            selectedService.password,
+            selectedCredential.password,
             mainPassword
           );
           console.log(
-            `${selectedService.service}:
-          Username: ${selectedService.username}
+            `${selectedCredential.service}:
+          Username: ${selectedCredential.username}
           Password: ${cryptPassword.toString(CryptoJS.enc.Utf8)}`
           );
         }
@@ -72,41 +50,13 @@ const start = async () => {
     case "add":
       {
         await saveCredentials(mainPassword);
-
-        // const credentials = await readCredentials();
-        // console.log(credentials);
-        // const newCredential = await askForCredential();
-
-        // Validation of credential service
-        // const startAddCase = async () => {
-        //   if (!doesCredentialServiceExist(newCredential)) {
-        //     await askForCredential();
-        //     console.log("Your new service has been saved");
-        //   } else {
-        //     console.log("Service already exists");
-        //     startAddCase();
-        //   }
-        // };
-        // startAddCase();
-
-        // console.log(newCredential);
       }
       break;
 
     case "delete":
       {
-        const credentials = await readCredentials();
-        const credentialServices = credentials.map(
-          //create a new array which only includes services
-          (credential) => credential.service
-        );
-        const service = await chooseService(credentialServices);
-        const selectedService = credentials.find(
-          (credential) => credential.service === service
-        );
-        if (selectedService) {
-          await deleteCredential(selectedService);
-        }
+        const selectedCredential = await selectCredential();
+        await deleteCredential(selectedCredential);
       }
       break;
   }
