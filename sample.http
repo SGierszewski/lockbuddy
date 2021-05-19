@@ -1,10 +1,10 @@
 ### Request all credentials (HTTP/1.1 is the currently most popular protocol version)
 GET http://localhost:5000/api/credentials HTTP/1.1
-Content-Type: application/json
+Accept: application/json
 
 ### Request a single credential
 GET http://localhost:5000/api/credentials/MyService HTTP/1.1
-Content-Type: application/json
+Accept: application/json
 
 ### Add a new credential
 POST http://localhost:5000/api/credentials HTTP/1.1
@@ -17,4 +17,4 @@ Content-Type: application/json
 }
 
 ### Delete a credential
-DELETE /api/credentials/MyService HTTP/1.1
+DELETE http://localhost:5000/api/credentials/MyService HTTP/1.1
