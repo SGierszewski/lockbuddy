@@ -1,10 +1,13 @@
 import type { Credential } from "../types";
-import { askForCredential, chooseService } from "../utils/question";
+import { chooseService } from "../utils/question";
 import CryptoJS from "crypto-js";
 import { getCollection, getCredentialsCollection } from "../database";
 
-export const saveCredentials = async (password: string): Promise<void> => {
-  const newCredential = await askForCredential();
+export const saveCredentials = async (
+  newCredential: Credential,
+  password: string
+): Promise<void> => {
+  // const newCredential = await askForCredential();
   const passwordEncrypt = CryptoJS.AES.encrypt(
     newCredential.password,
     password
