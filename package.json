@@ -4,7 +4,7 @@
   "scripts": {
     "client:dev": "vite",
     "cli:dev": "ts-node --project tsconfig.server.json src/cli",
-    "server:dev": "ts-node --project tsconfig.server.json src/server",
+    "server:dev": "tsnd --project tsconfig.server.json src/server",
     "server:build": "tsc --project tsconfig.server.json",
     "client:build": "vite build",
     "build": "npm run client:build && npm run server:build",
@@ -29,6 +29,7 @@
     "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-standard": "^22.0.0",
     "ts-node": "^9.1.1",
+    "ts-node-dev": "^1.1.6",
     "typescript": "^4.2.4",
     "vite": "^2.2.3"
   },
