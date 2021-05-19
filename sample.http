@@ -1,0 +1,16 @@
+### Request all credentials
+GET http://localhost:5000/api/credentials HTTP/1.1
+Content-Type: application/json
+
+### Add a new credential
+POST http://localhost:5000/api/credentials HTTP/1.1
+Content-Type: application/json
+
+{
+  "service": "MyService",
+  "username": "BobBoson",
+  "password": "supersecret9000"
+}
+
+### Delete a credential
+DELETE /api/credentials/MyService HTTP/1.1
