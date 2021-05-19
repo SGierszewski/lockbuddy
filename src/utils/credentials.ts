@@ -22,10 +22,8 @@ export const readCredentials = async (): Promise<Credential[]> => {
   return await getCredentialsCollection().find().sort({ service: 1 }).toArray();
 };
 
-export const deleteCredential = async (
-  credential: Credential
-): Promise<void> => {
-  await getCollection("credentials").deleteOne(credential);
+export const deleteCredential = async (service: string): Promise<void> => {
+  await getCollection("credentials").deleteOne({ service: service });
   console.log("Credential successfully deleted.");
 };
 
