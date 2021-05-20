@@ -1,10 +1,13 @@
 import type { Credential } from "../types";
-import { askForCredential, chooseService } from "../utils/question";
+import { chooseService } from "../utils/question";
 import CryptoJS from "crypto-js";
 import { getCollection, getCredentialsCollection } from "../database";
 
-export const saveCredentials = async (password: string): Promise<void> => {
-  const newCredential = await askForCredential();
+export const saveCredentials = async (
+  newCredential: Credential,
+  password: string
+): Promise<void> => {
+  //const newCredential = await askForCredential();
   const passwordEncrypt = CryptoJS.AES.encrypt(
     newCredential.password,
     password
@@ -13,18 +16,26 @@ export const saveCredentials = async (password: string): Promise<void> => {
   await getCollection("credentials").insertOne(newCredential);
 };
 
+//possible to search for specific credentials inside find query; important to set toArray()!!
+//sort service by name; 1 = upwards, -1 = downwards
 export const readCredentials = async (): Promise<Credential[]> => {
-  //possible to search for specific credentials inside find query; important to set toArray()!!
-  return await getCredentialsCollection()
-    .find()
-    .sort({ service: 1 }) //sort service by name; 1 = upwards, -1 = downwards
-    .toArray();
+  return await getCredentialsCollection().find().sort({ service: 1 }).toArray();
 };
 
-export const deleteCredential = async (
-  credential: Credential
-): Promise<void> => {
-  await getCollection("credentials").deleteOne(credential);
+export const readCredential = async (service: string): Promise<Credential> => {
+  const credential = await getCredentialsCollection().findOne({
+    service: service,
+  });
+
+  // ! is shorter and simultaneously checks for all possible cases (null, undefinded,....)
+  if (!credential) {
+    throw new Error("No credential found");
+  }
+  return credential;
+};
+
+export const deleteCredential = async (service: string): Promise<void> => {
+  await getCollection("credentials").deleteOne({ service: service });
   console.log("Credential successfully deleted.");
 };
 
