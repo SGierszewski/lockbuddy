@@ -3,7 +3,7 @@ GET http://localhost:5000/api/credentials HTTP/1.1
 Accept: application/json
 
 ### Request a single credential
-GET http://localhost:5000/api/credentials/MyService HTTP/1.1
+GET http://localhost:5000/api/credentials/Steam HTTP/1.1
 Accept: application/json
 
 ### Add a new credential

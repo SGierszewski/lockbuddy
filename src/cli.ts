@@ -4,7 +4,11 @@ import {
   saveCredentials,
   selectCredential,
 } from "./utils/credentials";
-import { askForMainPassword, askForCommand } from "./utils/question";
+import {
+  askForMainPassword,
+  askForCommand,
+  askForCredential,
+} from "./utils/question";
 import { isMainPasswordValid } from "./utils/validation";
 import CryptoJS from "crypto-js";
 import { connectDatabase, disconnectDatabase } from "./database";
@@ -49,14 +53,16 @@ const start = async () => {
       break; // there is only one valid case, therefore a break stops the process; if more cases may be valid no break is needed
     case "add":
       {
-        await saveCredentials(mainPassword);
+        const newCredential = await askForCredential();
+        await saveCredentials(newCredential, mainPassword);
+        console.log(newCredential);
       }
       break;
 
     case "delete":
       {
         const selectedCredential = await selectCredential();
-        await deleteCredential(selectedCredential);
+        await deleteCredential(selectedCredential.service);
       }
       break;
   }

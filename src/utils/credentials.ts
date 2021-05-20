@@ -7,7 +7,7 @@ export const saveCredentials = async (
   newCredential: Credential,
   password: string
 ): Promise<void> => {
-  // const newCredential = await askForCredential();
+  //const newCredential = await askForCredential();
   const passwordEncrypt = CryptoJS.AES.encrypt(
     newCredential.password,
     password
@@ -20,6 +20,18 @@ export const saveCredentials = async (
 //sort service by name; 1 = upwards, -1 = downwards
 export const readCredentials = async (): Promise<Credential[]> => {
   return await getCredentialsCollection().find().sort({ service: 1 }).toArray();
+};
+
+export const readCredential = async (service: string): Promise<Credential> => {
+  const credential = await getCredentialsCollection().findOne({
+    service: service,
+  });
+
+  // ! is shorter and simultaneously checks for all possible cases (null, undefinded,....)
+  if (!credential) {
+    throw new Error("No credential found");
+  }
+  return credential;
 };
 
 export const deleteCredential = async (service: string): Promise<void> => {
