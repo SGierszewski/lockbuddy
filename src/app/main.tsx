@@ -1,10 +1,10 @@
-import "./style.css";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './globals.css';
+import App from './App';
 
-const app = document.querySelector("#app");
-
-if (app !== null) {
-  app.innerHTML = `
-  <h1>Hello Vite!</h1>
-  <a href="https://vitejs.dev/guide/features.html" target="_blank">Documentation</a>
-`;
-}
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
