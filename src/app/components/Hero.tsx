@@ -10,9 +10,11 @@ type HeroProps = {
 function Hero({ title, subtitle, imgSrc }: HeroProps): JSX.Element {
   return (
     <div className={styles.hero}>
-      <h1 className={styles.hero__title}>{title}</h1>
-      <p className={styles.hero__subtitle}>{subtitle}</p>
-      <img className={styles.hero__image} src={imgSrc} alt="" />
+      <span className={styles.hero_header}>
+        <h1 className={styles.hero_header__title}>{title}</h1>
+        <img className={styles.hero_header__image} src={imgSrc} alt="" />
+      </span>
+      <p className={styles.hero_header__subtitle}>{subtitle}</p>
     </div>
   );
 }

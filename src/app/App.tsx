@@ -9,10 +9,10 @@ function App(): JSX.Element {
       <Hero
         title="LockBuddy"
         subtitle="All your credentials in one safe space"
-        imgSrc="./assets/dog.svg"
+        imgSrc="../src/assets/dog.svg"
       />
       <main>
-        <ul>
+        <ul className={styles.Credential_list}>
           <Credential service="Github" username="Steffi" password="123" />
           <Credential service="Github" username="Steffi" password="123" />
           <Credential service="Github" username="Steffi" password="123" />
