@@ -1,0 +1,27 @@
+/* .hero {
+  background-color: cadetblue;
+} */
+
+.hero_header {
+  display: flex;
+  align-content: stretch;
+  padding: 1.5em;
+  padding-bottom: 0;
+}
+
+.hero_header__title {
+  font-size: 3em;
+  color: #233d4d;
+}
+
+.hero_header__image {
+  width: 5em;
+  color: #233d4d;
+}
+
+.hero_header__subtitle {
+  margin: 0;
+  padding-bottom: 0.5em;
+  font-size: 1.2em;
+  color: #4a7c59;
+}
