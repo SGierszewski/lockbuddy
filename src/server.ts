@@ -16,6 +16,13 @@ if (process.env.MONGO_URL === undefined) {
 const app = express();
 const port = 5000;
 
+// Allow CORS for every following route
+// Express Middleware (Alternative to CORS module)
+app.use((_request, response, next) => {
+  response.setHeader("Access-Control-Allow-Origin", "*");
+  next();
+});
+
 app.use(express.json());
 
 // Request all credentials (Credential Collection)
